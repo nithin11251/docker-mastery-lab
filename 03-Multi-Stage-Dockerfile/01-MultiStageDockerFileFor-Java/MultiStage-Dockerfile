@@ -1,0 +1,11 @@
+#stage 1 Build
+FROM eclipse-temurin:17-jdk as builder
+WORKDIR /java-app
+COPY sample.java /java-app
+RUN javac sample.java
+
+#Stage 2 Runtime(Smaller Base Image)
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /java-app2
+COPY --from=builder /java-app/sample.class /java-app2
+CMD ["java","sample"]

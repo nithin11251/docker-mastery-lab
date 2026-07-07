@@ -1,0 +1,11 @@
+#Stage 1 Build
+FROM maven:3.6.3-openjdk-17 AS builder
+WORKDIR /mvn-app
+COPY . /mvn-app
+RUN mvn clean package -DskipTests
+
+#Stage 2 Runtime(Smaller Image)
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /mvn-app
+COPY --from=builder /mvn-app/target/samplemaven-1.0-SNAPSHOT.jar /mvn-app/samplemaven-1.0-SNAPSHOT.jar
+CMD ["java","-jar", "mvn-app/samplemaven-1.0-SNAPSHOT.jar"]
