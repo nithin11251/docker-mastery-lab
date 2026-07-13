@@ -20,6 +20,7 @@ docker-mastery-lab/
 ├── 03-Multi-Stage-Dockerfile/
 ├── 04-Docker-Storage/
 ├── 05-Docker-Networking/
+├── 05-Docker-Compose/
 └── README.md
 ```
 
