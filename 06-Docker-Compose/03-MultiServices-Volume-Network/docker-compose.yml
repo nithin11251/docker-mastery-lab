@@ -1,0 +1,22 @@
+volumes:
+  ubuntu-volume:          #Creates ubuntu volume for ubuntu service
+  nginx-volume:           #Creates nginx volume for nginx service
+networks:
+  bridge-nw:              #Creates a bridge network for both services
+   driver: bridge
+services:
+  ubuntu-svc:             #Creates ubuntu service
+    image: ubuntu:latest
+    volumes:
+      - ubuntu-volume:/data  #Mounts the ubuntu volume to the /data directory in the container
+    networks:
+      - bridge-nw             #Connects the ubuntu service to the bridge network
+    command: tail -f /dev/null
+  nginx-svc:                   #Creates nginx service
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - nginx-volume:/usr/share/nginx/html     #Mounts the nginx volume to the /usr/share/nginx/html directory in the container
+    networks:
+      - bridge-nw
